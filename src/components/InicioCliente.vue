@@ -4,6 +4,7 @@
     <h1>Bienvenido</h1>
     <button @click="navContratarPlanSeguro" class="btn-nav">Contratar Plan de Seguro</button>
     <button @click="navContratos" class="btn-nav">Mis Contratos</button>
+    <button @click="irAFiltroSvelte" class="btn-nav">Filtro de Usos del Seguro</button>
     <button @click="cerrarSesion" class="btn-cerrar-sesion">Cerrar Sesión</button>
   </header>
 
@@ -76,7 +77,7 @@ export default {
   methods: {
     //Metodos la seccion del Carrusel de planes
     fetchPlanes() {
-      axios.get("https://proyecto-core-backend-production.up.railway.app/plan")
+      axios.get("http://localhost:8080/plan")
       .then((response) => {
         this.planes = response.data;
       })
@@ -105,7 +106,7 @@ export default {
       this.clienteActual = cliente;
       this.idCliente = this.clienteActual.idCliente;
 
-      axios.get("https://proyecto-core-backend-production.up.railway.app/contrato/filtrar/cliente",{
+      axios.get("http://localhost:8080/contrato/filtrar/cliente",{
         params: { idcliente: this.idCliente },
       })
       .then((response) => {
@@ -123,6 +124,15 @@ export default {
     },
     navContratos() {
       this.$router.push("/cliente/mis-contratos");
+    },
+    irAFiltroSvelte() {
+      const cliente = JSON.parse(localStorage.getItem("cliente"));
+      if (cliente) {
+        const idCliente = cliente.idCliente;
+        window.location.href = `http://localhost:50577?idCliente=${idCliente}`;
+      } else {
+        alert("No se encontró información del cliente. Por favor, inicia sesión.");
+      }
     },
     cerrarSesion() {
       localStorage.clear();
