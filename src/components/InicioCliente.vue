@@ -129,7 +129,7 @@ export default {
       const cliente = JSON.parse(localStorage.getItem("cliente"));
       if (cliente) {
         const idCliente = cliente.idCliente;
-        window.location.href = `http://localhost:50577?idCliente=${idCliente}`;
+        window.location.href = `https://componente-en-svelte.vercel.app?idCliente=${idCliente}`;
       } else {
         alert("No se encontró información del cliente. Por favor, inicia sesión.");
       }
